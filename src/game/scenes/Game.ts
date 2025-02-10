@@ -290,7 +290,7 @@ class Game extends Phaser.Scene {
         const ghostY = this.getGhostPosition();
         const { shape, color } = this.currentTetromino;
     
-        this.ghostGraphics.fillStyle(color, 0.3); // Ghost color with transparency
+        this.ghostGraphics.fillStyle(color, 0.5); // Ghost color with transparency
     
         for (let y = 0; y < shape.length; y++) {
             for (let x = 0; x < shape[y].length; x++) {
@@ -582,6 +582,16 @@ class Game extends Phaser.Scene {
         this.drawHeldTetromino();
     }
     
+    /**
+     * Draws the held Tetromino on the hold graphics canvas.
+     * Clears the previous drawing and checks if there is a held Tetromino.
+     * If there is a held Tetromino, it draws the Tetromino's shape with the specified color.
+     * 
+     * The Tetromino is drawn starting at a fixed position (300, 80) on the canvas.
+     * Each block of the Tetromino is drawn with a size of BLOCK_SIZE.
+     * 
+     * @returns {void} This method does not return anything.
+     */
     drawHeldTetromino() {
         this.holdGraphics.clear();
         if (!this.heldTetromino) return;
