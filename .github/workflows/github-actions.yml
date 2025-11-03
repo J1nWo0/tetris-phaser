@@ -46,7 +46,7 @@ jobs:
                   find ./dist -type l -ls || echo "No symlinks found."
                   ls -lR ./dist
 
-            - name: Check for symlinks/hardlinks
+            - name: Check for symlinks
               run: |
                   if find ./dist -type l | grep .; then
                     echo "Symlinks found!"
@@ -54,7 +54,27 @@ jobs:
                   else
                     echo "No symlinks."
                   fi
+
+            - name: Check for hard links
+              run: |
+                  echo "Checking for hard links in ./dist..."
+                  find ./dist -type f -links +1 -exec ls -li {} +
+                  if find ./dist -type f -links +1 | grep .; then
+                    echo "Hard links found! Please remove all hard links from the build output."
+                    exit 1
+                  else
+                    echo "No hard links."
+                  fi
+
+            - name: Check dist size
+              run: |
                   du -sh ./dist
+                  SIZE=$(du -s ./dist | awk '{print $1}')
+                  MAX_SIZE=$((10 * 1024 * 1024)) # 10GB in KB
+                  if [ "$SIZE" -gt "$MAX_SIZE" ]; then
+                    echo "Build output exceeds 10GB limit!"
+                    exit 1
+                  fi
 
             - name: Upload build artifact
               uses: actions/upload-artifact@v4
