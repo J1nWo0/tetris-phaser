@@ -32,6 +32,11 @@ jobs:
             - name: List build output
               run: ls -R ./dist
 
+            - name: Check for symlinks/hardlinks
+              run: |
+                  find ./dist -type l && echo "Symlinks found!" && exit 1 || echo "No symlinks."
+                  du -sh ./dist
+
             - name: Upload build artifact
               uses: actions/upload-artifact@v4
               with:
