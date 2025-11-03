@@ -32,17 +32,28 @@ jobs:
             - name: List build output
               run: ls -R ./dist
 
-            - name: List symlinks in dist (debug)
+            - name: List symlinks in dist before deletion (debug)
               run: |
-                  echo "Symlinks in ./dist:"
+                  echo "Symlinks in ./dist before deletion:"
                   find ./dist -type l -ls || echo "No symlinks found."
 
             - name: Remove symlinks from dist
               run: find ./dist -type l -delete
 
+            - name: List symlinks in dist after deletion (debug)
+              run: |
+                  echo "Symlinks in ./dist after deletion:"
+                  find ./dist -type l -ls || echo "No symlinks found."
+                  ls -lR ./dist
+
             - name: Check for symlinks/hardlinks
               run: |
-                  find ./dist -type l && echo "Symlinks found!" && exit 1 || echo "No symlinks."
+                  if find ./dist -type l | grep .; then
+                    echo "Symlinks found!"
+                    exit 1
+                  else
+                    echo "No symlinks."
+                  fi
                   du -sh ./dist
 
             - name: Upload build artifact
