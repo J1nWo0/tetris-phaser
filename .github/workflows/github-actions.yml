@@ -29,9 +29,13 @@ jobs:
             - name: Build
               run: npm run build --if-present
 
-            - name: Upload Pages artifact
-              uses: actions/upload-pages-artifact@v4
+            - name: List build output
+              run: ls -R ./dist
+
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v4
               with:
+                  name: github-pages
                   path: ./dist
 
     deploy:
