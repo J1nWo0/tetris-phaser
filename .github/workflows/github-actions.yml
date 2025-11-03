@@ -32,6 +32,11 @@ jobs:
             - name: List build output
               run: ls -R ./dist
 
+            - name: List symlinks in dist (debug)
+              run: |
+                  echo "Symlinks in ./dist:"
+                  find ./dist -type l -ls || echo "No symlinks found."
+
             - name: Remove symlinks from dist
               run: find ./dist -type l -delete
 
