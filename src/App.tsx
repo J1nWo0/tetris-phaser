@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import PhaserGame from './game';
+import { useEffect } from "react";
+import "./App.css";
+import PhaserGame from "./game";
 
 function App() {
-  useEffect(() => {
-    PhaserGame;
-  }, []);
+	useEffect(() => {
+		PhaserGame;
+	}, []);
 
-  return <div id="game-container"></div>
+	return <div id="game-container"></div>;
 }
 
 export default App;

@@ -1,3 +1,3 @@
-import PhaserGame from './scenes/PhaserGame';
+import PhaserGame from "./scenes/PhaserGame";
 
 export default PhaserGame;
